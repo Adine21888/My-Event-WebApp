@@ -3,7 +3,10 @@ import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { User } from "./models/userModel.js";
 import usersRoute from "./routes/usersRoute.js";
-import eventsRoute from "./routes/eventsRoute.js"
+import organizerRoute from "./routes/organizerRoute.js";
+import eventRoute from "./routes/eventRoute.js";
+import teamPostRoute from "./routes/posts/teamPostRoute.js"
+import teamSearchRoute from "./routes/posts/teamSearchRoute.js"
 import cors from 'cors';
 
 
@@ -15,24 +18,28 @@ app.use(express.json());
 
 //Middle-ware to handle cors poilicy
 //option 1
-// app.use(cors());
+app.use(cors());
 //option 2
-app.use(
-    cors({
-        origin: 'http://localhost:5555',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type'],
-    })
-);
+// app.use(
+//     cors({
+//         origin: 'http://localhost:5555',
+//         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//         allowedHeaders: ['Content-Type'],
+//     })
+// );
 
 app.get('/', (request, response) => {
     console.log(request)
-    return response.status(234).send('Welcome to Trial Project')
+    return response.status(234).send('Welcome to Trial Project 01')
 });
 
 //Middle-ware for routes
 app.use('/users', usersRoute); 
-app.use('/events', eventsRoute);
+app.use('/events', eventRoute);
+app.use('/organizers', organizerRoute);
+app.use('/team-posts', teamPostRoute);
+app.use('/team-search-posts', teamSearchRoute);
+
 
 mongoose
     .connect(mongoDBURL)

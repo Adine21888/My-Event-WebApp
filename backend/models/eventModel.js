@@ -1,29 +1,34 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const eventSchema = mongoose.Schema(
+const eventSchema = new mongoose.Schema({
+  eventName: {
+    type: String,
+    required: true,
+  },
+  eventDescription: {
+    type: String,
+    required: true,
+  },
+  eventDate: {
+    type: Date,
+    required: true,
+  },
+  coverPhotoUrl: {
+    type: String,
+    default: '', // Optional field for cover photo URL
+  },
+  titleVideos: [
     {
-        eventName: {
-            type: String,
-            required: true,
-        },
-        organizerName: {
-            type: String,
-            required: true,
-        },
-        logo: {
-            data: Buffer, // Binary data of the image
-            contentType: String // MIME type of the image (e.g., image/jpeg)
-        },
-        description: {
-            type: String,
-        },
-        startDate: {
-            type: Date,
-        },
-    },
-    {
-        timestamps: true,
+      title: {
+        type: String,
+        required: true,
+      },
+      videoUrl: {
+        type: String,
+        default: '', // Optional field for video URL
+      },
     }
-);
+  ]
+});
 
 export const Event = mongoose.model('Event', eventSchema);

@@ -1,111 +1,119 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { User } from '../models/userModel.js';
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
-
-//Route to create new user
-router.post('', async (request, response) => {
+// Route to get posts created by a specific user
+router.get('/:userId/posts', auth, async (req, res) => {
+    const { userId } = req.params;
+  
     try {
-        if(
-            !request.body.regNo || 
-            !request.body.name
-        ) {
-            return response.status(400).send({
-                message: 'Send all required fields : regNo, name',
-            })
-        }
-        const newUser = {
-            regNo: request.body.regNo,
-            name: request.body.name,
-        }
-        const user = await User.create(newUser);
-        return response.status(201).send(user);
+      const teamPosts = await TeamPost.find({ createdBy: userId }).populate('event createdBy');
+      const teamSearchPosts = await TeamSearchPost.find({ createdBy: userId }).populate('event createdBy');
+      
+      res.status(200).json([...teamPosts, ...teamSearchPosts]);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
 
-    }catch (error) {
-        console.log(error.message);
-        response.status(500).send({ message: error.message})
+// Sign Up
+router.post('/signup', async (req, res) => {
+    const { regNo, name, email, password, university, country } = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = new User({ regNo, name, email, university, country, password: hashedPassword });
+        await user.save();
+        res.status(201).send(user);
+    } catch (error) {
+        res.status(400).send({ message: error.message });
     }
 });
 
-
-//route to get all users from database
-router.get('', async (request, response) =>{
+// Sign In
+router.post('/signin', async (req, res) => {
+    const { regNo, password } = req.body;
     try {
-        const users = await User.find({});
-
-        return response.status(200).json({
-            count: users.length,
-            data: users
-        });
-    } catch (error){
-        console.log(error.message);
-        response.status(500).send({message: error.message });
-    }
-})
-
-
-//route to get ONE user from database by id
-router.get('/:id', async (request, response) =>{
-    try {
-
-        const { id } = request.params;
-
-        const user = await User.findById(id);
-
-        return response.status(200).json(user);
-
-    } catch (error){
-        console.log(error.message);
-        response.status(500).send({message: error.message });
-    }
-})
-
-
-//Route for update a user
-router.put('/:id', async (request, response) => {
-    try {
-        if(
-            !request.body.regNo || 
-            !request.body.name
-        ) {
-            return response.status(400).send({
-                message: 'Send all required fields : regNo, name',
-            });
+        const user = await User.findOne({ regNo });
+        if (!user || !await bcrypt.compare(password, user.password)) {
+            throw new Error('Invalid login credentials');
         }
-
-        const { id } = request.params;
-
-        const result = await User.findByIdAndUpdate(id, request.body);
-
-        if (!result){
-            return response.status(404).json({ message: 'Not Updated!' });
-        }
-
-        return response.status(200).send({message: 'Updated Successfully'})
-
-    }catch (error) {
-        console.log(error.message);
-        response.status(500).send({message: error.message });
+        const token = jwt.sign({ _id: user._id }, /*{  role: 'user' },*/ 'your_secret_key');
+        user.tokens = user.tokens.concat({ token }); // Add token to user tokens array
+        await user.save();
+        res.send({ user, token });
+    } catch (error) {
+        res.status(400).send({ message: error.message });
     }
 });
 
-//Route to delete a user
-router.delete('/:id', async(request, response) => {
-    try{
-        const { id } = request.params;
-
-        const result = await User.findByIdAndDelete(id);
-
-        if(!result) {
-            return response.status(404).json({message: 'User not found!'});
+// Get any User Profile
+router.get('/profile/:id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password'); // Exclude password field
+        if (!user) {
+            return res.status(404).send();
         }
-        return response.status(200).send({message: 'User is deleted Successfully.'})
+        res.send(user);
+    } catch (error) {
+        res.status(500).send();
+    }
+});
 
-        
-    }catch (error){
-        console.log(error.message);
-        response.status(500).send({message: error.message });
+// Update User Profile
+router.patch('/profile/:id', auth, async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['regNo', 'name', 'password', 'email', 'university', 'country'];
+  
+    // Ensure the authenticated user can only update their own profile
+    if (req.params.id !== req.user._id.toString()) { // Use req.user._id and convert to string
+      return res.status(403).send({ error: 'You are not authorized to update this profile.' });
+    }
+  
+    const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+  
+    if (!isValidOperation) {
+      return res.status(400).send({ error: 'Invalid updates!' });
+    }
+  
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).send({ error: 'User not found.' });
+      }
+  
+      updates.forEach(update => user[update] = req.body[update]);
+      await user.save();
+  
+      res.send(user);
+    } catch (error) {
+      res.status(400).send({ error: error.message });
+    }
+  });
+  
+
+// Delete User Account
+router.delete('/profile/:id', auth, async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        // Check if the authenticated user is deleting their own account
+        if (userId !== req.user._id.toString()) { // Use req.user._id and convert to string
+            return res.status(403).send({ error: 'You are not authorized to delete this account.' });
+        }
+
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).send({ error: 'User not found.' });
+        }
+
+        res.status(200).send({ message: 'User deleted successfully.' });
+    } catch (error) {
+        res.status(500).send({ error: 'Server error.' });
     }
 });
 
