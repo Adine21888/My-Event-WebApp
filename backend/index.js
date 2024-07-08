@@ -20,11 +20,12 @@ app.use(express.json());
 //option 1
 // app.use(cors());
 //option 2
+
 // CORS configuration
 const corsOptions = {
-  origin: 'https://mern-web-app-frontend.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: *,
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: '*',  // Allow all headers
   credentials: true
 };
 
