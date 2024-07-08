@@ -24,7 +24,7 @@ app.use(
     cors({
         origin: 'https://mern-web-app-api.vercel.app',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        // allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
     })
 );
