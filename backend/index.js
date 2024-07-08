@@ -18,15 +18,16 @@ app.use(express.json());
 
 //Middle-ware to handle cors poilicy
 //option 1
-app.use(cors());
+// app.use(cors());
 //option 2
-// app.use(
-//     cors({
-//         origin: 'https://mern-web-app-api.vercel.app',
-//         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//         allowedHeaders: ['Content-Type'],
-//     })
-// );
+app.use(
+    cors({
+        origin: 'https://mern-web-app-api.vercel.app',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true
+    })
+);
 
 app.get('/', (request, response) => {
     console.log(request)
