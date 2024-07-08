@@ -13,7 +13,7 @@ const UserSignIn = () => {
 
   const handleSignIn = () => {
     setLoading(true);
-    axios.post('http://mern-web-app-api.vercel.app/users/signin', { regNo, password })
+    axios.post('https://mern-web-app-api.vercel.app/users/signin', { regNo, password })
       .then((response) => {
         setLoading(false);
         alert('Sign In Successful');

@@ -22,7 +22,7 @@ app.use(cors());
 //option 2
 // app.use(
 //     cors({
-//         origin: 'http://mern-web-app-api.vercel.app',
+//         origin: 'https://mern-web-app-api.vercel.app',
 //         methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //         allowedHeaders: ['Content-Type'],
 //     })

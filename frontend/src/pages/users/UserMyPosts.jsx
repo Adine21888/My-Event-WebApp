@@ -24,10 +24,10 @@ const UserMyPosts = () => {
     const fetchPosts = async () => {
       try {
         const [teamPostsResponse, teamSearchPostsResponse] = await Promise.all([
-          axios.get(`http://mern-web-app-api.vercel.app/team-posts/myposts/${user._id}`, {
+          axios.get(`https://mern-web-app-api.vercel.app/team-posts/myposts/${user._id}`, {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get(`http://mern-web-app-api.vercel.app/team-search-posts/myposts/${user._id}`, {
+          axios.get(`https://mern-web-app-api.vercel.app/team-search-posts/myposts/${user._id}`, {
             headers: { Authorization: `Bearer ${token}` }
           })
         ]);

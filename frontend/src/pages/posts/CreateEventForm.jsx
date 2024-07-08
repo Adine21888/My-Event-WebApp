@@ -42,7 +42,7 @@ const CreateEventForm = () => {
       titleVideos: titleVideos.filter(video => video.title || video.videoUrl), // Filter out empty title videos
     };
 
-    axios.post('http://mern-web-app-api.vercel.app/events/create', eventDetails, {
+    axios.post('https://mern-web-app-api.vercel.app/events/create', eventDetails, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => {

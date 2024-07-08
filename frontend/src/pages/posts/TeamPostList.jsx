@@ -21,7 +21,7 @@ const TeamPostList = () => {
 
   const fetchTeamPosts = async () => {
     try {
-      const response = await axios.get('http://mern-web-app-api.vercel.app/team-posts');
+      const response = await axios.get('https://mern-web-app-api.vercel.app/team-posts');
       setTeamPosts(response.data);
     } catch (error) {
       console.error('Error fetching team posts:', error);
@@ -30,7 +30,7 @@ const TeamPostList = () => {
 
   const handleInterest = async (postId) => {
     try {
-      const response = await axios.post(`http://mern-web-app-api.vercel.app/team-posts/${postId}/interested`, {}, {
+      const response = await axios.post(`https://mern-web-app-api.vercel.app/team-posts/${postId}/interested`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       // Update the state to reflect the new interested user

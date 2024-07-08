@@ -12,7 +12,7 @@ const OrganizerProfile = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://mern-web-app-api.vercel.app/organizers/profile/${id}`, {
+    axios.get(`https://mern-web-app-api.vercel.app/organizers/profile/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
