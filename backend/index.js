@@ -22,12 +22,14 @@ app.use(express.json());
 //option 2
 app.use(
     cors({
-        origin: 'https://mern-web-app-api.vercel.app',
+        origin: 'https://mern-web-app-frontend.vercel.app',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        // allowedHeaders: ['Content-Type', 'Authorization'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
     })
 );
+
+app.options('*', cors()); // Enable preflight across the board
 
 app.get('/', (request, response) => {
     console.log(request)
