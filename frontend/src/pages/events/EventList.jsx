@@ -8,7 +8,7 @@ const EventList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5555/events')
+    axios.get('http://mern-web-app-api.vercel.app/events')
       .then((response) => {
         setEvents(response.data);
         setLoading(false);

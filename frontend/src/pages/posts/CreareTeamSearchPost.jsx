@@ -13,7 +13,7 @@ const CreateTeamSearchPost = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('http://localhost:5555/events');
+      const response = await axios.get('http://mern-web-app-api.vercel.app/events');
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -24,7 +24,7 @@ const CreateTeamSearchPost = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5555/team-search-posts/create', {
+      const response = await axios.post('http://mern-web-app-api.vercel.app/team-search-posts/create', {
         event: selectedEvent,
         description,
       }, {

@@ -22,7 +22,7 @@ app.use(cors());
 //option 2
 // app.use(
 //     cors({
-//         origin: 'http://localhost:5555',
+//         origin: 'http://mern-web-app-api.vercel.app',
 //         methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //         allowedHeaders: ['Content-Type'],
 //     })

@@ -15,7 +15,7 @@ const DeleteUser = () => {
   const handleDeleteFunction = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:5555/users/profile/${id}`, {
+      .delete(`http://mern-web-app-api.vercel.app/users/profile/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(() => {

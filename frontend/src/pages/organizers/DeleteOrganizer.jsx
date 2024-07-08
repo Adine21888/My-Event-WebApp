@@ -15,7 +15,7 @@ const DeleteOrganizer = () => {
   const handleDeleteFunction = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:5555/organizers/profile/${id}`, {
+      .delete(`http://mern-web-app-api.vercel.app/organizers/profile/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(() => {

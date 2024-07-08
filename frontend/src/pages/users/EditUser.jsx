@@ -19,7 +19,7 @@ const EditUser = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:5555/users/profile/${id}`, {
+    axios.get(`http://mern-web-app-api.vercel.app/users/profile/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -46,7 +46,7 @@ const EditUser = () => {
     console.log('Updating profile with data:', updateData); // Debugging line
 
     try {
-      const response = await axios.patch(`http://localhost:5555/users/profile/${id}`, updateData, {
+      const response = await axios.patch(`http://mern-web-app-api.vercel.app/users/profile/${id}`, updateData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Profile updated:', response.data); // Logging success response

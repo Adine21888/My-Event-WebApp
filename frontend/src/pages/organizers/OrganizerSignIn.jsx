@@ -13,7 +13,7 @@ const OrganizerSignIn = () => {
 
   const handleSignIn = () => {
     setLoading(true);
-    axios.post('http://localhost:5555/organizers/signin', { email, password })
+    axios.post('http://mern-web-app-api.vercel.app/organizers/signin', { email, password })
       .then((response) => {
         setLoading(false);
         alert('Sign In Successful');
