@@ -18,20 +18,26 @@ app.use(express.json());
 
 //Middle-ware to handle cors poilicy
 //option 1
-app.use(cors());
-//option 2
-
+//app.use(cors());
 // CORS configuration
-//const corsOptions = {
-//  origin: '*', // Allow all origins
-//  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//  allowedHeaders: '*',  // Allow all headers
-//  credentials: true
-//};
+const corsOptions = {
+  origin: 'https://mern-web-app-frontend.vercel.app', // Allow only this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+  credentials: true
+};
 
 // Apply CORS middleware
-//app.use(cors(corsOptions));
-//app.options('*', cors(corsOptions)); // Enable preflight requests for all routes
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Enable preflight requests for all routes
+
+// Middleware to ensure CORS headers are present
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://mern-web-app-frontend.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 app.get('/', (request, response) => {
     console.log(request)
