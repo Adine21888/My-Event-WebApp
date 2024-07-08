@@ -18,20 +18,20 @@ app.use(express.json());
 
 //Middle-ware to handle cors poilicy
 //option 1
-// app.use(cors());
+app.use(cors());
 //option 2
 
 // CORS configuration
-const corsOptions = {
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: '*',  // Allow all headers
-  credentials: true
-};
+//const corsOptions = {
+//  origin: '*', // Allow all origins
+//  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//  allowedHeaders: '*',  // Allow all headers
+//  credentials: true
+//};
 
 // Apply CORS middleware
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Enable preflight requests for all routes
+//app.use(cors(corsOptions));
+//app.options('*', cors(corsOptions)); // Enable preflight requests for all routes
 
 app.get('/', (request, response) => {
     console.log(request)
