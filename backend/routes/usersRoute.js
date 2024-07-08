@@ -4,22 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/userModel.js';
 import auth from '../middleware/auth.js';
 
-const router = express.Router();
-
-// Route to get posts created by a specific user
-router.get('/:userId/posts', auth, async (req, res) => {
-    const { userId } = req.params;
-  
-    try {
-      const teamPosts = await TeamPost.find({ createdBy: userId }).populate('event createdBy');
-      const teamSearchPosts = await TeamSearchPost.find({ createdBy: userId }).populate('event createdBy');
-      
-      res.status(200).json([...teamPosts, ...teamSearchPosts]);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-  
+const router = express.Router();  
 
 // Sign Up
 router.post('/signup', async (req, res) => {

@@ -7,6 +7,21 @@ import { User } from '../../models/userModel.js';
 
 const router = express.Router();
 
+// Route to get team posts created by a specific user
+router.get('/myposts/:userId', auth, async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const teamPosts = await TeamPost.find({ createdBy: userId }).populate('event createdBy');
+    res.status(200).json(teamPosts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
 // Route to create a new team forming post
 router.post('/create', auth, async (req, res) => {
     const { event, maxTeamSize, teamName } = req.body;
