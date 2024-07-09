@@ -29,7 +29,7 @@ app.use(
     })
 );
 
-// app.options('*', cors()); // Enable preflight across the board
+app.options('*', cors()); // Enable preflight across the board
 
 app.get('/', (request, response) => {
     console.log(request)
