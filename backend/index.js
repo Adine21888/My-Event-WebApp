@@ -18,33 +18,23 @@ app.use(express.json());
 
 //Middle-ware to handle cors poilicy
 //option 1
-app.use(cors(
-  {
-    origin: 'https://mern-web-app-frontend.vercel.app', // Allow only this origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    // allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
-    credentials: true
-  }
-));
-//CORS configuration 2
-// const corsOptions = {
-//     origin: 'https://mern-web-app-frontend.vercel.app', // Allow only this origin
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//     // allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
-//     credentials: true
-//   };
-  
-  // Apply CORS middleware
-  // app.use(cors(corsOptions));
-  // app.options('*', cors(corsOptions)); // Enable preflight requests for all routes
-  
-  // Middleware to ensure CORS headers are present
-//   app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://mern-web-app-frontend.vercel.app');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-//   });
+// app.use(cors());
+//option 2
+app.use(
+    cors({
+        origin: 'https://mern-web-app-frontend.vercel.app',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        // allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true
+    })
+);
+
+// app.options('*', cors()); // Enable preflight across the board
+
+app.get('/', (request, response) => {
+    console.log(request)
+    return response.status(234).send('Welcome to Trial Project 01')
+});
 
 //Middle-ware for routes
 app.use('/users', usersRoute); 
