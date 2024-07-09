@@ -1,6 +1,6 @@
 // organizerRoutes.js
 import express from 'express';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Organizer } from '../models/organizerModel.js';
 import organizerAuth from '../middleware/organizerAuth.js';
@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
   const { name, email, university, country, password } = req.body;
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
     const organizer = new Organizer({ name, email, university, country, password: hashedPassword });
     await organizer.save();
     res.status(201).send(organizer);
@@ -25,7 +25,7 @@ router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   try {
     const organizer = await Organizer.findOne({ email });
-    if (!organizer || !await bcrypt.compare(password, organizer.password)) {
+    if (!organizer || !await bcryptjs.compare(password, organizer.password)) {
       throw new Error('Invalid login credentials');
     }
     const token = jwt.sign({ _id: organizer._id }, 'your_organizer_secret_key');

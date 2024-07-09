@@ -1,5 +1,5 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/userModel.js';
 import auth from '../middleware/auth.js';
@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
     const { regNo, name, email, password, university, country } = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcryptjs.hash(password, 10);
         const user = new User({ regNo, name, email, university, country, password: hashedPassword });
         await user.save();
         res.status(201).send(user);
@@ -24,7 +24,7 @@ router.post('/signin', async (req, res) => {
     const { regNo, password } = req.body;
     try {
         const user = await User.findOne({ regNo });
-        if (!user || !await bcrypt.compare(password, user.password)) {
+        if (!user || !await bcryptjs.compare(password, user.password)) {
             throw new Error('Invalid login credentials');
         }
         const token = jwt.sign({ _id: user._id }, /*{  role: 'user' },*/ 'your_secret_key');
