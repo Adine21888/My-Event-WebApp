@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`https://mern-web-app-api.vercel.app/users/profile/${id}`, {
+    axios.get(`http://localhost:5555/users/profile/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {

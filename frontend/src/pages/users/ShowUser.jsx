@@ -12,7 +12,7 @@ const ShowUser = () => {
     useEffect(() => {
       setLoading(true);
       axios.
-        get(`https://mern-web-app-api.vercel.app/users/${id}`)
+        get(`http://localhost:5555/users/${id}`)
         .then((response) => {
           setUser(response.data);
           setLoading(false);

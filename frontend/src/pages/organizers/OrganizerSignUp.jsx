@@ -15,7 +15,7 @@ const OrganizerSignUp = () => {
 
   const handleSignUp = () => {
     setLoading(true);
-    axios.post('https://mern-web-app-api.vercel.app/organizers/signup', { name, email, university, country, password })
+    axios.post('http://localhost:5555/organizers/signup', { name, email, university, country, password })
       .then(() => {
         setLoading(false);
         alert('Sign Up Successful');

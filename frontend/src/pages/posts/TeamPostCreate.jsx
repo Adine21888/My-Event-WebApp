@@ -18,7 +18,7 @@ const TeamPostCreate = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('https://mern-web-app-api.vercel.app/events');
+      const response = await axios.get('http://localhost:5555/events');
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -34,7 +34,7 @@ const TeamPostCreate = () => {
     }
 
     try {
-      const response = await axios.post('https://mern-web-app-api.vercel.app/team-posts/create', {
+      const response = await axios.post('http://localhost:5555/team-posts/create', {
         event: selectedEvent,
         maxTeamSize: parseInt(maxTeamSize),
         teamName: teamName,

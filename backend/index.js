@@ -18,25 +18,25 @@ app.use(express.json());
 
 //Middle-ware to handle cors poilicy
 //option 1
-// app.use(cors());
+app.use(cors());
 //option 2
-app.use(
-    cors({
-        origin: 'https://mern-web-app-frontend.vercel.app',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true
-    })
-);
+// app.use(
+//     cors({
+//         origin: 'https://mern-web-app-frontend.vercel.app',
+//         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//         allowedHeaders: ['Content-Type', 'Authorization'],
+//         credentials: true
+//     })
+// );
 
-app.options('*', cors()); // Enable preflight across the board
+// app.options('*', cors()); // Enable preflight across the board
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://your-frontend.vercel.app');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  });
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://your-frontend.vercel.app');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     next();
+//   });
   
 
 app.get('/', (request, response) => {

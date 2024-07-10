@@ -22,7 +22,7 @@ const ManageTeam = () => {
 
   const fetchPost = async () => {
     try {
-      const response = await axios.get(`https://mern-web-app-api.vercel.app/team-posts/${postId}`);
+      const response = await axios.get(`http://localhost:5555/team-posts/${postId}`);
       setPost(response.data);
     } catch (error) {
       console.error('Error fetching post:', error);
@@ -31,7 +31,7 @@ const ManageTeam = () => {
 
   const handleUserStatus = async (userId, status) => {
     try {
-      const response = await axios.patch(`https://mern-web-app-api.vercel.app/team-posts/${postId}/interested`, {
+      const response = await axios.patch(`http://localhost:5555/team-posts/${postId}/interested`, {
         userId,
         status,
       }, {
