@@ -38,6 +38,7 @@ import UserHome from './pages/UserHome';
 import Posts from './pages/Posts';
 import EventListPage from './pages/events/EventListPage';
 import UserMyPosts from './pages/users/UserMyPosts';
+import OrganizerHome from './pages/OrganizerHome';
 
 
 const App = () => {
@@ -72,6 +73,7 @@ const App = () => {
 
           <Route path='/organizers/events/create' element={<OrganizerPrivateRoute><CreateEventForm /></OrganizerPrivateRoute>} />
           <Route path='/events' element={<EventList />} />
+          <Route path='/organizer-home' element={<PrivateRoute><OrganizerHome /></PrivateRoute>} />
           
           <Route path='/team-posts' element={<TeamPostList />} />
           <Route path='/team-posts/create' element={<TeamPostCreate />} />

@@ -8,7 +8,6 @@ const OrganizerPrivateRoute = ({ children }) => {
   if (!token) {
     return <Navigate to="/login" />;
   }
-
   return children;
 };
 

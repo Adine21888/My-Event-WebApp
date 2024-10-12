@@ -30,6 +30,7 @@ const CreateTeamSearchPost = () => {
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
+      alert("Team search post created successfluyy!");
       console.log('Team search post created:', response.data);
       // Optionally: Redirect to a new page or update state to indicate success
     } catch (error) {

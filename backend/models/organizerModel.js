@@ -11,7 +11,10 @@ const organizerSchema = new mongoose.Schema(
       required: true,
       unique: true
     },
-    university: String,
+    university: {
+      type: String,
+      required: true
+    },
     country: String,
     password: {
       type: String,

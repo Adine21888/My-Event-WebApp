@@ -18,7 +18,7 @@ const OrganizerSignIn = () => {
         setLoading(false);
         alert('Sign In Successful');
         login(response.data.token, response.data.organizer);
-        navigate('/');
+        navigate('/organizer-home');
       })
       .catch((error) => {
         setLoading(false);
