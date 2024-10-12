@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/index.jsx",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "public" 
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "backend/$1" 
+      },
+      {
+        "src": "/(.*)",
+        "dest": "public/$1" 
+      }
+    ]
+  }
+  
