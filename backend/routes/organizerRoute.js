@@ -88,7 +88,7 @@ router.delete('/profile/:id', organizerAuth, async (req, res) => {
   try {
     // Check if the authenticated organizer is deleting their own account
     if (organizerId !== req.organizer._id.toString()) { // Use req.organizer._id and convert to string
-      return res.status(403).send({ error: 'You are not authorized to delete this account.' });
+      return res.status(403).send({ error: 'You are not authorized to delete this account!.' });
     }
 
     const organizer = await Organizer.findByIdAndDelete(organizerId);
